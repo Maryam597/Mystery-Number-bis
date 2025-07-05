@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.lvlbtn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid rgb(163, 185, 199);
+    font-family: "system-ui";
+    font-size: 21px;
+    color: rgb(255, 255, 255);
+    padding: 10px 30px;
+    transition: 2s;
+    width: 335px;
+    box-shadow: rgb(88, 134, 165) 0px 0px 0px 0px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgb(178, 209, 235) 0%, rgb(65, 150, 192) 100%);
+    font-weight: 500;
+    height: 40px;
+}
+
+.btn:hover {
+    color: rgb(255, 255, 255);
+    width: 337px;
+    background: rgb(0, 102, 204) none repeat scroll 0% 0% / auto padding-box border-box;
+    border-color: rgb(204, 0, 105);
+    border-width: 2px;
+    border-style: solid;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 50px; /* Adjust padding to provide space above bubbles */
+}
+
+#bubbles-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    background: #f0f8ff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    margin-top: 20px; /* Add margin-top to space out from the buttons */
+}
+
+.bubble {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 50%;
+    background: #f1c40f;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    margin: 5px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    position: relative;
+}
+
+.bubble:hover {
+    transform: scale(1.2);
+}
+
+.bubble.clicked {
+    background: #0906b4;
+    transform: scale(1.1);
+}
+
+.bubble.wrong {
+    text-decoration: line-through;
+    background: #bdc3c7;
+}
+
+.bubble.jiggle {
+    animation: jiggle 1.5s ease-in-out infinite;
+}
+
+@keyframes jiggle {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+.game-box {
+    height: auto;
+    max-width: 400px;
+    border: 5px solid black;
+    padding: 10px; /* Reduced padding */
+    overflow-y: auto; /* Allows scrolling if content overflows */
+    margin-top: 10px; /* Adjust margin to fit content */
+}
+
+#game h3, #game p {
+    margin: 5px 0; /* Reduced margin between elements */
+    line-height: 1.2; /* Reduced line height */
+}
+
+#game {
+    max-height: auto;
+    overflow-y: hidden;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.playbtn {
+    height: 70px;
+    width: 70px;
+}
+
+.level-buttons {
+    margin-bottom: 20px;
+    display: flex;
+    width: 100px;
+    justify-content: center; /* Center level buttons horizontally */
+    gap: 10px; /* Add space between buttons */
+}
