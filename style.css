@@ -28,16 +28,20 @@ body {
 }
 
 #game {
-  background-color: #ffffff;
-  padding: 15px 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  margin: 0 auto 20px;
-  max-width: 500px;
-  text-align: left;
-  line-height: 1.5;
-  font-size: 18px;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* hauteur = 100% de la fenêtre */
+  display: flex;
+  justify-content: center; /* centrer horizontalement */
+  align-items: center;     /* centrer verticalement */
+  background: radial-gradient(circle at top left, #ffe0f0, #d0e0ff, #e0f7ff); /* si tu veux un fond sympa */
+  font-family: 'Segoe UI', sans-serif;
 }
+
+}
+
+
 
 
 #bubbles-container {
@@ -48,22 +52,21 @@ body {
 }
 
 .bubble {
-  background-color: #4caf50;
-  color: white;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  text-align: center;
-  font-weight: bold;
-  user-select: none;
-  transition: background-color 0.3s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), rgba(173, 216, 230, 0.4), rgba(147, 112, 219, 0.3), transparent);
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.5), 0 0 12px rgba(147, 112, 219, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  animation: jiggle 3s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+
 .bubble:hover {
-  background-color: #388e3c;
-  cursor: pointer;
+  transform: scale(1.1);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.7), 0 0 16px rgba(147, 112, 219, 0.6);
 }
 
 .bubble.clicked {
@@ -87,4 +90,14 @@ body {
 
 #replay-btn:hover {
   background-color: #1769aa;
+}
+
+
+
+@keyframes jiggle {
+  0%   { transform: translateY(0) scale(1); }
+  25%  { transform: translateY(-2px) scale(1.02); }
+  50%  { transform: translateY(0) scale(0.98); }
+  75%  { transform: translateY(2px) scale(1.01); }
+  100% { transform: translateY(0) scale(1); }
 }
