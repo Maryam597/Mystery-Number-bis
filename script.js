@@ -1,106 +1,123 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-    let button = document.getElementById('button');
-    let outputtext = document.getElementById('game');
-    let level = 'easy';
-    let maxRange = 10;
-    let maxChances = 3;
-    let chances;
-    let number;
+  const outputtext = document.getElementById('game');
+  const bubblesContainer = document.getElementById('bubbles-container');
 
-    function setLevel(newLevel) {
-        level = newLevel;
+  const maxChances = 3; 
+  const maxRange = 10; 
 
-        let bubblesContainer = document.getElementById('bubbles-container');
-        let bubbleSize;
+  let chances = 0;
+  let numberMystere = 0;
+  let gameOver = false;
 
-        switch (level) {
-            case 'easy':
-                maxRange = 10;
-                maxChances = 3;
-                bubbleSize = '80px';
-                bubblesContainer.style.width = '600px';
-                bubblesContainer.style.height = '350px';
-                break;
+  // On stocke chaque essai pour affichage multi-lignes
+  let essaisHistory = [];
 
-            case 'medium':
-                maxRange = 50;
-                maxChances = 5;
-                bubbleSize = '60px';
-                bubblesContainer.style.width = '700px';
-                bubblesContainer.style.height = '400px';
-                break;
+  function initGame() {
+    chances = 0;
+    gameOver = false;
+    essaisHistory = []; // on reset l’historique des essais
+    numberMystere = Math.floor(Math.random() * maxRange) + 1;
 
-            case 'hard':
-                maxRange = 100;
-                maxChances = 8;
-                bubbleSize = '50px';
-                bubblesContainer.style.width = '800px';
-                bubblesContainer.style.height = '450px';
-                break;
-        }
+    console.log(`Nombre mystère (niveau 1) : ${numberMystere}`); // LOG du nombre mystère
 
-        number = Math.floor(Math.random() * maxRange) + 1;
-        chances = 0;
-        console.log('Mystery Number:', number);
+    outputtext.style.fontSize = '20px';   
+    outputtext.style.minHeight = '100px'; 
+    // Message d’accueil avec niveau et intervalle
+    outputtext.innerHTML = `Niveau 1 : Le numéro est entre 1 et ${maxRange}.<br>`;
 
-        document.getElementById('game').innerHTML = `Trouver le numéro mystère (entre 1 et ${maxRange})`;
+    createBubbles();
+  }
 
-        createBubbles(maxRange, bubbleSize);
+  function createBubbles() {
+    bubblesContainer.innerHTML = ''; 
+
+    for (let i = 1; i <= maxRange; i++) {
+      const bubble = document.createElement('div');
+      bubble.classList.add('bubble');
+      bubble.textContent = i;
+      bubble.style.width = '60px';   
+      bubble.style.height = '60px';
+      bubble.style.lineHeight = '60px';
+      bubble.style.cursor = 'pointer';
+      bubble.style.userSelect = 'none';
+
+      bubble.addEventListener('click', () => handleGuess(i, bubble));
+
+      bubblesContainer.appendChild(bubble);
+    }
+  }
+
+  function handleGuess(guess, bubble) {
+    if (gameOver) return;  
+    if (bubble.classList.contains('clicked')) return; 
+
+    chances++;
+    bubble.classList.add('clicked');
+
+    if (guess === numberMystere) {
+      bubble.style.backgroundColor = '#2196f3';  
+      essaisHistory.push(`Essai ${chances} : ${guess} - Gagné ! 🎉`);
+      displayHistory();
+
+      outputtext.innerHTML += `<br><h2>Bravo, tu as gagné en ${chances} essai${chances > 1 ? 's' : ''} !</h2>`;
+
+      gameOver = true;
+      disableBubbles();
+      createReplayButton();
+      return;
+    } else {
+      bubble.style.backgroundColor = '#9e9e9e'; 
+      bubble.style.textDecoration = 'line-through'; 
+      if (guess < numberMystere) {
+        essaisHistory.push(`Essai ${chances} : ${guess} - C'est plus ➕`);
+      } else {
+        essaisHistory.push(`Essai ${chances} : ${guess} - C'est moins ➖`);
+      }
+      displayHistory();
     }
 
-    function createBubbles(range, bubbleSize) {
-        let container = document.getElementById('bubbles-container');
-        container.innerHTML = '';
-
-        for (let i = 1; i <= range; i++) {
-            let bubble = document.createElement('div');
-            bubble.className = 'bubble jiggle';
-            bubble.textContent = i;
-            bubble.style.width = bubbleSize;
-            bubble.style.height = bubbleSize;
-            bubble.style.lineHeight = bubbleSize;
-            bubble.addEventListener('click', () => handleGuess(i));
-            container.appendChild(bubble);
-        }
+    if (chances >= maxChances) {
+      outputtext.innerHTML += `<br><h2>Perdu! 😞</h2><p>Le nombre mystère était ${numberMystere}.</p>`;
+      gameOver = true;
+      disableBubbles();
+      createReplayButton();
     }
+  }
 
-    function handleGuess(guess) {
-        let bubbles = document.querySelectorAll('.bubble');
-        bubbles.forEach(bubble => bubble.classList.remove('clicked'));
+  function displayHistory() {
+    // Affiche la première ligne fixe + la liste des essais en lignes séparées
+    let baseMessage = `Niveau 1 : Le numéro est entre 1 et ${maxRange}.<br>`;
+    outputtext.innerHTML = baseMessage + essaisHistory.join('<br>');
+  }
 
-        let selectedBubble = document.querySelector(`.bubble:nth-child(${guess})`);
-        selectedBubble.classList.add('clicked');
+  function disableBubbles() {
+    const bubbles = document.querySelectorAll('.bubble');
+    bubbles.forEach(b => b.style.pointerEvents = 'none');
+  }
 
-        if (chances < maxChances) {
-            if (guess < number) {
-                outputtext.innerHTML += `<hr><h3 class="text-center">${chances + 1}${chances + 1 < 2 ? "<sup>er</sup>" : "<sup>ème</sup>"} Essai</h3><p class="text-center">${guess}? ... c'est ➕</p>`;
-            } else if (guess > number) {
-                outputtext.innerHTML += `<hr><h3 class="text-center">${chances + 1}${chances + 1 < 2 ? "<sup>er</sup>" : "<sup>ème</sup>"} Essai</h3><p class="text-center">${guess}? ... c'est ➖</p>`;
-            } else {
-                outputtext.innerHTML += `<hr><h3 class="text-center">${chances + 1}${chances + 1 < 2 ? "<sup>er</sup>" : "<sup>ème</sup>"} Essai</h3><h2 class="text-center">Gagné! 🙂</h2><p class="text-center">numéro mystère : ${number}</p><div class="text-center"><button class="btn btn-primary" type="submit" onclick="refresh()">Rejouer</button></div>`;
-                return;
-            }
+  function createReplayButton() {
+    // Ajoute un bouton Rejouer sous la zone de texte
+    let replayBtn = document.createElement('button');
+    replayBtn.textContent = 'Rejouer';
+    replayBtn.style.marginTop = '15px';
+    replayBtn.style.padding = '10px 20px';
+    replayBtn.style.fontSize = '18px';
+    replayBtn.style.cursor = 'pointer';
+    replayBtn.style.borderRadius = '8px';
+    replayBtn.style.border = 'none';
+    replayBtn.style.backgroundColor = '#2196f3';
+    replayBtn.style.color = 'white';
+    replayBtn.style.fontWeight = 'bold';
 
-            chances++;
-        }
-
-        selectedBubble.classList.add('wrong');
-
-        if (chances === maxChances && guess != number) {
-            outputtext.innerHTML += `<h2 class="text-center">Perdu! ☹️</h2><p class="text-center">numéro mystère : ${number}</p><div class="text-center"><button class="btn btn-primary" type="submit" onclick="refresh()">Rejouer</button></div>`;
-        }
+    // S’assurer qu’on a pas déjà un bouton avant d’en ajouter un
+    if (!document.getElementById('replay-btn')) {
+      replayBtn.id = 'replay-btn';
+      outputtext.appendChild(document.createElement('br'));
+      outputtext.appendChild(replayBtn);
+      replayBtn.addEventListener('click', initGame);
     }
+  }
 
-    function refresh() {
-        setLevel(level);
-        outputtext.innerHTML = '';
-    }
-
-    document.getElementById('easy').addEventListener('click', () => setLevel('easy'));
-    document.getElementById('medium').addEventListener('click', () => setLevel('medium'));
-    document.getElementById('hard').addEventListener('click', () => setLevel('hard'));
-
-    setLevel('easy');
-
+  initGame();
 });
