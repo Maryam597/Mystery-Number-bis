@@ -1,114 +1,90 @@
-/* Reset & base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  /* retirer height: 100vh sur tout */
-}
-
-/* Container */
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50px;
-  min-height: 100vh;
-  background: #f9faff;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #f0f4f8;
+  color: #333;
   text-align: center;
 }
 
-/* Boutons niveaux */
-.level-buttons {
-  display: flex;
-  gap: 10px;
+#level-buttons {
   margin-bottom: 20px;
 }
 
-.lvlbtn {
-  flex: 1;
+#level-buttons button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
-  border: 1px solid rgb(163, 185, 199);
-  font-family: "system-ui";
-  font-size: 18px;
-  color: #fff;
-  padding: 10px 0;
+  transition: background-color 0.3s;
+}
+
+#level-buttons button:hover {
+  background-color: #1769aa;
+}
+
+#game {
+  background-color: #ffffff;
+  padding: 15px 15px;
   border-radius: 10px;
-  background: linear-gradient(90deg, rgb(178, 209, 235) 0%, rgb(65, 150, 192) 100%);
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin: 0 auto 20px;
+  max-width: 500px;
+  text-align: left;
+  line-height: 1.5;
+  font-size: 18px;
 }
 
-.lvlbtn:hover {
-  background-color: rgb(0, 102, 204);
-}
 
-/* Container bulles */
 #bubbles-container {
   display: flex;
   flex-wrap: wrap;
-  width: 400px;
   justify-content: center;
   gap: 10px;
-  padding: 20px;
-  border: 2px solid #ccc;
-  border-radius: 15px;
-  background: #f0f8ff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  margin-bottom: 20px;
 }
 
-/* Bulles */
 .bubble {
-  display: inline-block;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
+  background-color: #4caf50;
+  color: white;
   border-radius: 50%;
-  background: #f1c40f;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
   user-select: none;
-  transition: transform 0.3s ease, background 0.3s ease;
-  box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-  font-weight: 700;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 }
 
 .bubble:hover {
-  transform: scale(1.15);
+  background-color: #388e3c;
+  cursor: pointer;
 }
 
-/* Bulles déjà cliquées et correctes */
 .bubble.clicked {
-  background: #2196f3; /* bleu */
-  transform: scale(1.1);
-  cursor: default;
-}
-
-/* Bulles fausses */
-.bubble.wrong {
+  opacity: 0.6;
   text-decoration: line-through;
-  background: #bdc3c7;
   cursor: default;
-  color: #444;
 }
 
-/* Zone de texte */
-.game-box {
-  max-width: 400px;
-  min-height: 100px;
-  padding: 15px 20px;
-  border: 3px solid black;
-  background: white;
-  font-size: 20px;
-  color: #222;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-  overflow-wrap: break-word;
-  white-space: normal;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  user-select: none;
+#replay-btn {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #2196f3;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#replay-btn:hover {
+  background-color: #1769aa;
 }
