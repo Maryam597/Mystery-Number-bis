@@ -1,8 +1,14 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
-  background-color: #f0f4f8;
-  color: #333;
+background: radial-gradient(circle at top left, #dceeff, #b3daff, #89c2ff);
   text-align: center;
 }
 
@@ -11,35 +17,50 @@ body {
 }
 
 #level-buttons button {
-  padding: 10px 20px;
-  margin: 0 5px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: #2196f3;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  background: #47daff;
+  background-image: -webkit-linear-gradient(top, #65defc, #76c1ed);
+  background-image: -moz-linear-gradient(top, #65defc, #76c1ed);
+  background-image: -ms-linear-gradient(top, #65defc, #76c1ed);
+  background-image: -o-linear-gradient(top, #65defc, #76c1ed);
+  background-image: linear-gradient(to bottom, #65defc, #76c1ed);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Georgia;
+  color: #fcfcfc;
+  font-size: 23px;
+  padding: 10px 20px 10px 20px;
+  border: solid #61baf2 0px;
+  text-decoration: none;
+
+
 }
 
 #level-buttons button:hover {
-  background-color: #1769aa;
+  background: #71bced;
+  background-image: -webkit-linear-gradient(top, #71bced, #11c5f2);
+  background-image: -moz-linear-gradient(top, #71bced, #11c5f2);
+  background-image: -ms-linear-gradient(top, #71bced, #11c5f2);
+  background-image: -o-linear-gradient(top, #71bced, #11c5f2);
+  background-image: linear-gradient(to bottom, #71bced, #11c5f2);
+  text-decoration: none;
+
 }
 
-#game {
+/* #game {
 body {
-  margin: 0;
-  padding: 0;
-  height: 100vh; /* hauteur = 100% de la fenêtre */
-  display: flex;
-  justify-content: center; /* centrer horizontalement */
-  align-items: center;     /* centrer verticalement */
-  background: radial-gradient(circle at top left, #ffe0f0, #d0e0ff, #e0f7ff); /* si tu veux un fond sympa */
-  font-family: 'Segoe UI', sans-serif;
-}
+
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(173, 216, 230, 0.4);
+  backdrop-filter: blur(5px);
+  max-width: 600px;
+  margin: auto;
 
 }
+
+} */
 
 
 
