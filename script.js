@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const outputtext = document.getElementById('game');
   const bubblesContainer = document.getElementById('bubbles-container');
 
-  // Configurations par niveau
+  const soundClick = new Audio('sounds/bubble.wav');
+  const soundWin = new Audio('sounds/win.wav');
+  const soundLose = new Audio('sounds/lose.wav');
+
   const levelsConfig = {
     easy: { maxRange: 10, maxChances: 3, bubbleSize: '60px' },
     medium: { maxRange: 25, maxChances: 5, bubbleSize: '50px' },
@@ -16,11 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let gameOver = false;
   let essaisHistory = [];
 
-  // Elements pour choisir le niveau (à ajouter dans ton HTML)
-  // <button id="easy">Easy</button>
-  // <button id="medium">Medium</button>
-  // <button id="hard">Hard</button>
-
   function initGame() {
     const config = levelsConfig[currentLevel];
     chances = 0;
@@ -30,10 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(`Nombre mystère (${currentLevel}) : ${numberMystere}`);
 
-    // Reset style et texte d'accueil
     outputtext.style.fontSize = '20px';
     outputtext.style.minHeight = '120px'; 
-    outputtext.style.lineHeight = '1.5em'; // espace entre lignes
+    outputtext.style.lineHeight = '1.5em';
 
     outputtext.innerHTML = `Niveau ${capitalize(currentLevel)} : Le numéro est entre 1 et ${config.maxRange}.<br>`;
 
@@ -67,20 +64,22 @@ document.addEventListener('DOMContentLoaded', function () {
     bubble.classList.add('clicked');
 
     const config = levelsConfig[currentLevel];
+    soundClick.play(); // 🔊 Son du clic
 
     if (guess === numberMystere) {
-      bubble.style.backgroundColor = '#2196f3'; // bleu gagné
+      bubble.style.backgroundColor = '#2196f3';
       essaisHistory.push(`Essai ${chances} : ${guess} - Gagné ! 🎉`);
       displayHistory();
 
       outputtext.innerHTML += `<br><h2>Bravo, tu as gagné en ${chances} essai${chances > 1 ? 's' : ''} !</h2>`;
 
+      soundWin.play(); // 🔊 Son de victoire
       gameOver = true;
       disableBubbles();
       createReplayButton();
       return;
     } else {
-      bubble.style.backgroundColor = '#9e9e9e'; // gris raté
+      bubble.style.backgroundColor = '#9e9e9e';
       bubble.style.textDecoration = 'line-through';
       if (guess < numberMystere) {
         essaisHistory.push(`Essai ${chances} : ${guess} - C'est plus ➕`);
@@ -92,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (chances >= config.maxChances) {
       outputtext.innerHTML += `<br><h2>Perdu! 😞</h2><p>Le nombre mystère était ${numberMystere}.</p>`;
+      soundLose.play(); // 🔊 Son de défaite
       gameOver = true;
       disableBubbles();
       createReplayButton();
@@ -131,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Changement de niveau
   function setLevel(level) {
     if (!levelsConfig[level]) return;
     currentLevel = level;
@@ -148,12 +147,10 @@ document.addEventListener('DOMContentLoaded', function () {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  // Event listeners pour les boutons niveau (à créer dans ton HTML)
   document.getElementById('easy').addEventListener('click', () => setLevel('easy'));
   document.getElementById('medium').addEventListener('click', () => setLevel('medium'));
   document.getElementById('hard').addEventListener('click', () => setLevel('hard'));
 
-  // Démarrage initial
   initGame();
 
 });
